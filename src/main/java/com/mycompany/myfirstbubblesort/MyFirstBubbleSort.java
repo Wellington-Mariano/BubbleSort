@@ -5,35 +5,36 @@
 package com.mycompany.myfirstbubblesort;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author wellington-mariano
  */
+
 public class MyFirstBubbleSort {
 
     public static void main(String[] args) {
         Scanner mySc = new Scanner(System.in);
-        int namesNumber=0;
-        int index = 0;
         
-        System.out.println("How many students are you ordering:");
-        namesNumber = mySc.nextInt();
+        int listSize=0;
+        int index=0;
+       
+        String list = reg("How many names on list?"); //Regex validation
         
-        String arr[] = new String[namesNumber]; //0 1 2 3 4
+        listSize = Integer.parseInt(list); //parse to integer if regex valid
+        
+        String arr[] = new String[listSize]; 
         
         do{
             System.out.println("Type name:");
             arr[index] = mySc.next(); // 1 2 3 4 5
             index++;
-        }while(index < namesNumber); //index goes up to 4
+        }while(index < listSize); //index goes up to 4
             
         System.out.println("\n");
-       /* 
-        for (String arrEl : arr) {
-            System.out.println(arrEl);
-        }*/
-        
+      
         bubbleSort(arr);
     }
     
@@ -67,7 +68,34 @@ public class MyFirstBubbleSort {
                 System.out.printf("%s ",arrEl);
         }
     }
+    
+    public static String reg(String prompt){
+        
+        Scanner mySc = new Scanner(System.in);
+        
+        String regex = "^(?:[\\/\\s]?[0-9]){1,12}$"; //Regex non accepting string and only a certain range of numbers
+        
+        String input;
+        
+        Pattern pattern = Pattern.compile(regex);
+       
+        while (true)
+        {
+            System.out.println(prompt);
+            
+            input = mySc.next();
+            
+            Matcher matcher = pattern.matcher(input);
+            
+            if (matcher.matches()){
+                return input;
+            }
+            else
+            {
+                System.out.println("Go to bed. Pay attention to input - Come on!!!");//Message if wrong input
+            }
+        }
+    }
 }
-
 
 
